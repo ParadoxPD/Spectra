@@ -1,4 +1,4 @@
-# Spectra
+# Spectra : The Diet app for plants
 
 
 ---
@@ -12,3 +12,18 @@ for analyzing and using light spectrum intensity for the better growth and susta
 
 ---
 
+## Tech Stack used :
+ - [**Flutter**](https://flutter.dev/)
+ - [**Dart**](https://dart.dev/)
+ - [**Python**](https://www.python.org/)
+
+
+---
+## Plant growth graph using RGB and IR values : 
+
+![graph](./Data/Screenshot_2021-06-05-22-42-26-08_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg)
+![graph](./Data/Screenshot_2021-06-05-22-44-06-49_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg)
+![graph](./Data/Screenshot_2021-06-05-22-44-06-49_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg)
+![graph](./Data/Screenshot_2021-06-05-22-44-10-26_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg)
+![graph](./Data/Screenshot_2021-06-05-22-44-15-53_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg)
+![graph](./Data/Screenshot_2021-06-05-22-53-37-60.jpg)

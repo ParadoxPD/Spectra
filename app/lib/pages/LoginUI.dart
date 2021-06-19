@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/inputWidget.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -19,59 +18,74 @@ class Login extends StatelessWidget {
                       padding: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height / 2.3),
                     ),
-                    Container(
+                    Expanded(
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "Welcome",
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Color(0xffffffff),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 36,
+                                fontFamily: 'Segoe UI',
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(top: 40)),
+                            Text(
+                              "An app that control light spectrum according to",
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Color(0xffffffff),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                                fontFamily: 'Segoe UI',
+                              ),
+                            ),
+                            Text(
+                              "you at your finger tips",
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Color(0xffffffff),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                                fontFamily: 'Segoe UI',
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(top: 30)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
                       child: Column(
                         children: <Widget>[
+                          ///holds email header and inputField
                           Text(
-                            "Welcome",
+                            "CONTINUE WITH:",
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               color: Color(0xffffffff),
                               fontWeight: FontWeight.w300,
+                              fontFamily: 'Segoe UI',
                             ),
                           ),
-                          Text(
-                            "An app that control light spectrum according to",
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Color(0xffffffff),
-                              fontWeight: FontWeight.w300,
-                            ),
+
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 20),
                           ),
-                          Text(
-                            "you at your finger tips",
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Color(0xffffffff),
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
+                          roundedRectButton("Email", emailGradients),
+                          roundedRectButton("Facebook", facebookGradients),
                         ],
                       ),
                     ),
-                    Column(
-                      children: <Widget>[
-                        ///holds email header and inputField
-                        Text(
-                          "CONTINUE WITH:",
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Color(0xffffffff),
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 20),
-                        ),
-                        roundedRectButton("Email", emailGradients),
-                        roundedRectButton("Facebook", facebookGradients),
-                      ],
-                    )
+                    Padding(padding: EdgeInsets.only(top: 20)),
                   ],
                 ))));
   }

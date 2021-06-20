@@ -91,32 +91,74 @@ class Login extends StatelessWidget {
   }
 }
 
-Widget roundedRectButton(String title, List<Color> gradient) {
-  return Builder(builder: (BuildContext mContext) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 10),
-      child: Stack(
-        alignment: Alignment(1.0, 0.0),
-        children: <Widget>[
-          Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(mContext).size.width / 1.15,
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0)),
-              gradient: LinearGradient(
-                  colors: gradient,
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight),
+class EmailRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50), // Creates border
+                  color: Color(0xFF8A56AC)),
+              tabs: [
+                Text("SIGN IN"),
+                Text("SIGN UP"),
+              ],
             ),
-            child: Text(title,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500)),
-            padding: EdgeInsets.only(top: 16, bottom: 16),
           ),
-        ],
+          body: TabBarView(
+            children: [
+              Container(),
+              Container(),
+            ],
+          ),
+        ),
+      )),
+    );
+  }
+}
+
+Widget roundedRectButton(
+  String title,
+  List<Color> gradient,
+) {
+  return Builder(builder: (BuildContext mContext) {
+    return new GestureDetector(
+      onTap: () {
+        Navigator.push(
+          mContext,
+          MaterialPageRoute(builder: (context) => EmailRoute()),
+        );
+      },
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 10),
+        child: Stack(
+          alignment: Alignment(1.0, 0.0),
+          children: <Widget>[
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(mContext).size.width / 1.15,
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+                gradient: LinearGradient(
+                    colors: gradient,
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight),
+              ),
+              child: Text(title,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500)),
+              padding: EdgeInsets.only(top: 16, bottom: 16),
+            ),
+          ],
+        ),
       ),
     );
   });

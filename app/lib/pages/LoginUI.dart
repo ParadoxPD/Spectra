@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import './Dashboard.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -150,39 +152,14 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: Colors.white,
         child: Padding(
             padding: EdgeInsets.only(top: 50, bottom: 40, left: 25, right: 25),
             child: ListView(
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF000000)),
-                      ),
-                      hintText: 'Email',
-                      hintStyle:
-                          TextStyle(fontSize: 16.0, color: Color(0x77241332)),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF000000)),
-                      ),
-                      hintText: 'Password',
-                      hintStyle:
-                          TextStyle(fontSize: 16.0, color: Color(0x77241332)),
-                    ),
-                  ),
-                ),
+                customTextField("Email", EdgeInsets.all(10), false),
+                customTextField(
+                    "Password", EdgeInsets.fromLTRB(10, 10, 10, 0), true),
                 Container(
                   padding:
                       EdgeInsets.only(left: 5, right: 5, top: 60, bottom: 20),
@@ -222,45 +199,33 @@ class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: Colors.white,
         child: Padding(
             padding: EdgeInsets.only(top: 50, bottom: 40, left: 25, right: 25),
             child: ListView(
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF000000)),
-                      ),
-                      hintText: 'Email',
-                      hintStyle:
-                          TextStyle(fontSize: 16.0, color: Color(0x77241332)),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF000000)),
-                      ),
-                      hintText: 'Password',
-                      hintStyle:
-                          TextStyle(fontSize: 16.0, color: Color(0x77241332)),
-                    ),
-                  ),
-                ),
+                customTextField("Phone Number", EdgeInsets.all(10), false),
+                customTextField(
+                    "Full Name", EdgeInsets.fromLTRB(10, 10, 10, 0), false),
+                customTextField(
+                    "State", EdgeInsets.fromLTRB(10, 40, 10, 0), false),
+                customTextField(
+                    "District", EdgeInsets.fromLTRB(10, 0, 10, 0), false),
+                customTextField("Farmer/Scientist",
+                    EdgeInsets.fromLTRB(10, 0, 10, 0), false),
+                customTextField(
+                    "Password", EdgeInsets.fromLTRB(10, 0, 10, 0), true),
+                customTextField("Confirm Password",
+                    EdgeInsets.fromLTRB(10, 0, 10, 0), true),
                 Container(
                   padding:
                       EdgeInsets.only(left: 5, right: 5, top: 60, bottom: 20),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Respond to button press
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Dashboard()),
+                      );
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -275,19 +240,26 @@ class SignUp extends StatelessWidget {
                         child: Text('CONTINUE')),
                   ),
                 ),
-                Container(
-                  child: TextButton(
-                    style: ButtonStyle(
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xff8A56AC)),
-                    ),
-                    onPressed: () {},
-                    child: Text('FORGOT PASSWORD'),
-                  ),
-                )
               ],
             )));
   }
+}
+
+Widget customTextField(String hintText, EdgeInsets padd, bool obscureText) {
+  return Container(
+    padding: padd,
+    child: TextField(
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        fillColor: Colors.white,
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFF000000)),
+        ),
+        hintText: hintText,
+        hintStyle: TextStyle(fontSize: 16.0, color: Color(0x77241332)),
+      ),
+    ),
+  );
 }
 
 Widget roundedRectButton(

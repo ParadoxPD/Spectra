@@ -204,7 +204,7 @@ class SignUp extends StatelessWidget {
             padding: EdgeInsets.only(top: 50, bottom: 40, left: 25, right: 25),
             child: ListView(
               children: <Widget>[
-                customTextField("Phone Number", EdgeInsets.all(10), false),
+                customTextField("Email", EdgeInsets.all(10), false),
                 customTextField(
                     "Full Name", EdgeInsets.fromLTRB(10, 10, 10, 0), false),
                 customTextField(

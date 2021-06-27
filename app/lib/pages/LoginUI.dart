@@ -148,7 +148,16 @@ class EmailRoute extends StatelessWidget {
   }
 }
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  const SignIn({Key key}) : super(key: key);
+
+  _SignIn createState() => _SignIn();
+}
+
+class _SignIn extends State<SignIn> {
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -157,9 +166,10 @@ class SignIn extends StatelessWidget {
             padding: EdgeInsets.only(top: 50, bottom: 40, left: 25, right: 25),
             child: ListView(
               children: <Widget>[
-                customTextField("Email", EdgeInsets.all(10), false),
                 customTextField(
-                    "Password", EdgeInsets.fromLTRB(10, 10, 10, 0), true),
+                    "Email", EdgeInsets.all(10), false, emailController),
+                customTextField("Password", EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    true, passController),
                 Container(
                   padding:
                       EdgeInsets.only(left: 5, right: 5, top: 60, bottom: 20),
@@ -195,7 +205,21 @@ class SignIn extends StatelessWidget {
   }
 }
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
+  const SignUp({Key key}) : super(key: key);
+
+  _SignUp createState() => _SignUp();
+}
+
+class _SignUp extends State<SignUp> {
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+  final confPassController = TextEditingController();
+  final stateController = TextEditingController();
+  final nameController = TextEditingController();
+  final typeController = TextEditingController();
+  final distController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -204,24 +228,29 @@ class SignUp extends StatelessWidget {
             padding: EdgeInsets.only(top: 50, bottom: 40, left: 25, right: 25),
             child: ListView(
               children: <Widget>[
-                customTextField("Email", EdgeInsets.all(10), false),
                 customTextField(
-                    "Full Name", EdgeInsets.fromLTRB(10, 10, 10, 0), false),
-                customTextField(
-                    "State", EdgeInsets.fromLTRB(10, 40, 10, 0), false),
-                customTextField(
-                    "District", EdgeInsets.fromLTRB(10, 0, 10, 0), false),
+                    "Email", EdgeInsets.all(10), false, emailController),
+                customTextField("Full Name", EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    false, passController),
+                customTextField("State", EdgeInsets.fromLTRB(10, 40, 10, 0),
+                    false, stateController),
+                customTextField("District", EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    false, distController),
                 customTextField("Farmer/Scientist",
-                    EdgeInsets.fromLTRB(10, 0, 10, 0), false),
+                    EdgeInsets.fromLTRB(10, 0, 10, 0), false, typeController),
+                customTextField("Password", EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    true, passController),
                 customTextField(
-                    "Password", EdgeInsets.fromLTRB(10, 0, 10, 0), true),
-                customTextField("Confirm Password",
-                    EdgeInsets.fromLTRB(10, 0, 10, 0), true),
+                    "Confirm Password",
+                    EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    true,
+                    confPassController),
                 Container(
                   padding:
                       EdgeInsets.only(left: 5, right: 5, top: 60, bottom: 20),
                   child: ElevatedButton(
                     onPressed: () {
+                      print(emailController.text);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Dashboard()),
@@ -245,10 +274,12 @@ class SignUp extends StatelessWidget {
   }
 }
 
-Widget customTextField(String hintText, EdgeInsets padd, bool obscureText) {
+Widget customTextField(String hintText, EdgeInsets padd, bool obscureText,
+    TextEditingController controller) {
   return Container(
     padding: padd,
     child: TextField(
+      controller: controller,
       obscureText: obscureText,
       decoration: InputDecoration(
         fillColor: Colors.white,

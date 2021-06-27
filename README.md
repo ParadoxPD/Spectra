@@ -21,9 +21,36 @@ for analyzing and using light spectrum intensity for the better growth and susta
 ---
 ## Plant growth graph using RGB and IR values : 
 
-![graph](./Data/Screenshot_2021-06-05-22-42-26-08_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg)
-![graph](./Data/Screenshot_2021-06-05-22-44-06-49_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg)
-![graph](./Data/Screenshot_2021-06-05-22-44-06-49_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg)
-![graph](./Data/Screenshot_2021-06-05-22-44-10-26_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg)
-![graph](./Data/Screenshot_2021-06-05-22-44-15-53_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg)
-![graph](./Data/Screenshot_2021-06-05-22-53-37-60.jpg)
+
+<section>
+<p float="left" >
+  <img src="./Data/Screenshot_2021-06-05-22-44-15-53_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg" width = "300" />
+  <img src="./Data/Screenshot_2021-06-05-22-44-06-49_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg"  width = "300" /> 
+  <img src="./Data/Screenshot_2021-06-05-22-44-06-49_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg  " width = "300" />
+</p>
+
+
+<p float="left">
+  <img src="./Data/Screenshot_2021-06-05-22-44-10-26_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg" width = "300" />
+  <img src="./Data/Screenshot_2021-06-05-22-44-15-53_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg" width = "300" /> 
+  <img src="./Data/Screenshot_2021-06-05-22-53-37-60.jpg" width = "300" />
+</p>
+</section>
+
+## **Resources** : 
+
+- ### **Research Data used** :
+   - [EFFECTS OF BLUE AND GREEN LIGHT ON PLANT GROWTH
+AND DEVELOPMENT AT LOW AND HIGH
+PHOTOSYNTHETIC PHOTON FLUX
+](https://digitalcommons.usu.edu/cgi/viewcontent.cgi?article=5650&context=etd)
+
+  - [How Plants Use Light? 3 LED Spectrums [Full Breakdown]](https://www.youtube.com/watch?v=NMVP7Nvew0A)
+
+  - [The Effect of Different Wavelengths of Light on the Rate of Photosynthesis](https://www.youtube.com/watch?v=H1yv4NtFT3A)
+
+  - [Leaf Pigments and Light](https://www.youtube.com/watch?v=dwz3qozDiyI)
+
+
+- ### **Backend** : 
+  - [Create A REST API](https://www.simplecode.io/blog/create-a-rest-api-part-2-postgresql-with-knex-setup/) 

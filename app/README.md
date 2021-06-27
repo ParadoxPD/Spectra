@@ -12,7 +12,7 @@ The frontend the the app is designed using [**Flutter**](https://flutter.dev/) a
 ---
 
 ## TaskList :
-- [ ] Add login and regestration funtionality (Using APIs)
-- [ ] Create the Dashboard
-
+- [ ] Add login and registration funtionality (Using APIs)
+- [x] Create the Dashboard
+- [ ] Process User Data
 ---

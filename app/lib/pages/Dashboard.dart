@@ -5,39 +5,74 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text("hello"),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text('Drawer Header'),
+              ),
+              ListTile(
+                title: Text('Item 1'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Item 2'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ), // Populate the Drawer in the next step.
+        ),
         body: Container(
-      color: Color(0xffE6E6E1),
-      child: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(100),
-            child: Text("Top bar"),
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: SizedBox.expand(
-                child: ListView.separated(
-                  itemCount: 30,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(
-                    height: 24,
-                    color: Color(0xffE6E6E1),
+          color: Color(0xffE6E6E1),
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(100),
+                child: Text("Top bar"),
+              ),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  child: SizedBox.expand(
+                    child: ListView.separated(
+                      itemCount: 30,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(
+                        height: 24,
+                        color: Color(0xffE6E6E1),
+                      ),
+                      itemBuilder: (context, index) {
+                        return getCard(context);
+                      },
+                    ),
                   ),
-                  itemBuilder: (context, index) {
-                    return getCard(context);
-                  },
                 ),
               ),
-            ),
+              Container(
+                padding: EdgeInsets.all(30),
+                child: Text("Top bar"),
+              ),
+            ],
           ),
-          Container(
-            padding: EdgeInsets.all(30),
-            child: Text("Top bar"),
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 }
 

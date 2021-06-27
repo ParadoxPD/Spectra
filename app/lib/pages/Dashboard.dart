@@ -95,7 +95,7 @@ Widget getCard(context) {
             ),
           ),
           title: 'Tomato',
-          isFavourite: true,
+          isFavourite: false,
         ),
         Container(
             padding: EdgeInsets.fromLTRB(60, 0, 20, 0),

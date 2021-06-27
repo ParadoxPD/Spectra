@@ -157,6 +157,8 @@ class SignIn extends StatefulWidget {
 class _SignIn extends State<SignIn> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
+  final emailFocus = FocusNode();
+  final passFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -166,16 +168,37 @@ class _SignIn extends State<SignIn> {
             padding: EdgeInsets.only(top: 50, bottom: 40, left: 25, right: 25),
             child: ListView(
               children: <Widget>[
-                customTextField(
-                    "Email", EdgeInsets.all(10), false, emailController),
+                customTextField("Email", EdgeInsets.all(10), false,
+                    emailController, emailFocus),
                 customTextField("Password", EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    true, passController),
+                    true, passController, passFocus),
                 Container(
                   padding:
                       EdgeInsets.only(left: 5, right: 5, top: 60, bottom: 20),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Respond to button press
+                      if (emailController.text == '') {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Enter Email properly",
+                            emailController,
+                            emailFocus);
+                      } else if (passController.text == '') {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Enter Password properly",
+                            passController,
+                            passFocus);
+                      } else {
+                        print(emailController.text);
+                        print(passController.text);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Dashboard()),
+                        );
+                      }
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -205,6 +228,33 @@ class _SignIn extends State<SignIn> {
   }
 }
 
+Future showDialogBox(
+    BuildContext context,
+    String errorTitle,
+    String errorMessage,
+    TextEditingController controller,
+    FocusNode textFocus) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(errorTitle),
+          content: new Text(errorMessage),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new TextButton(
+              child: new Text("Ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                controller.clear();
+                textFocus.requestFocus();
+              },
+            ),
+          ],
+        );
+      });
+}
+
 class SignUp extends StatefulWidget {
   const SignUp({Key key}) : super(key: key);
 
@@ -220,6 +270,14 @@ class _SignUp extends State<SignUp> {
   final typeController = TextEditingController();
   final distController = TextEditingController();
 
+  final emailFocus = FocusNode();
+  final passFocus = FocusNode();
+  final confPassFocus = FocusNode();
+  final stateFocus = FocusNode();
+  final nameFocus = FocusNode();
+  final typeFocus = FocusNode();
+  final distFocus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -228,33 +286,91 @@ class _SignUp extends State<SignUp> {
             padding: EdgeInsets.only(top: 50, bottom: 40, left: 25, right: 25),
             child: ListView(
               children: <Widget>[
-                customTextField(
-                    "Email", EdgeInsets.all(10), false, emailController),
+                customTextField("Email", EdgeInsets.all(10), false,
+                    emailController, emailFocus),
                 customTextField("Full Name", EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    false, passController),
+                    false, passController, nameFocus),
                 customTextField("State", EdgeInsets.fromLTRB(10, 40, 10, 0),
-                    false, stateController),
+                    false, stateController, stateFocus),
                 customTextField("District", EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    false, distController),
-                customTextField("Farmer/Scientist",
-                    EdgeInsets.fromLTRB(10, 0, 10, 0), false, typeController),
+                    false, distController, distFocus),
+                customTextField(
+                    "Farmer/Scientist",
+                    EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    false,
+                    typeController,
+                    typeFocus),
                 customTextField("Password", EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    true, passController),
+                    true, passController, passFocus),
                 customTextField(
                     "Confirm Password",
                     EdgeInsets.fromLTRB(10, 0, 10, 0),
                     true,
-                    confPassController),
+                    confPassController,
+                    confPassFocus),
                 Container(
                   padding:
                       EdgeInsets.only(left: 5, right: 5, top: 60, bottom: 20),
                   child: ElevatedButton(
                     onPressed: () {
-                      print(emailController.text);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Dashboard()),
-                      );
+                      if (emailController.text == '') {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Enter Email properly",
+                            emailController,
+                            emailFocus);
+                      } else if (passController.text == '') {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Enter Password properly",
+                            passController,
+                            passFocus);
+                      } else if (nameController.text == '') {
+                        showDialogBox(context, "Invalid Input!",
+                            "Enter Name properly", nameController, nameFocus);
+                      } else if (confPassController.text == '') {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Enter Confirm Password properly",
+                            confPassController,
+                            confPassFocus);
+                      } else if (stateController.text == '') {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Enter State properly",
+                            stateController,
+                            stateFocus);
+                      } else if (distController.text == '') {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Enter District properly",
+                            distController,
+                            distFocus);
+                      } else if (typeController.text == '') {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Enter Farmer or Scientist",
+                            typeController,
+                            typeFocus);
+                      } else {
+                        print(emailController.text);
+                        print(passController.text);
+                        print(nameController.text);
+                        print(confPassController.text);
+                        print(stateController.text);
+                        print(distController.text);
+                        print(typeController.text);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Dashboard()),
+                        );
+                      }
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -275,10 +391,11 @@ class _SignUp extends State<SignUp> {
 }
 
 Widget customTextField(String hintText, EdgeInsets padd, bool obscureText,
-    TextEditingController controller) {
+    TextEditingController controller, FocusNode focus) {
   return Container(
     padding: padd,
     child: TextField(
+      focusNode: focus,
       controller: controller,
       obscureText: obscureText,
       decoration: InputDecoration(

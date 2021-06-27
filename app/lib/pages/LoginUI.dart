@@ -194,6 +194,9 @@ class _SignIn extends State<SignIn> {
                       } else {
                         print(emailController.text);
                         print(passController.text);
+
+                        emailController.clear();
+                        passController.clear();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => Dashboard()),
@@ -226,33 +229,6 @@ class _SignIn extends State<SignIn> {
               ],
             )));
   }
-}
-
-Future showDialogBox(
-    BuildContext context,
-    String errorTitle,
-    String errorMessage,
-    TextEditingController controller,
-    FocusNode textFocus) {
-  return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text(errorTitle),
-          content: new Text(errorMessage),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new TextButton(
-              child: new Text("Ok"),
-              onPressed: () {
-                Navigator.of(context).pop();
-                controller.clear();
-                textFocus.requestFocus();
-              },
-            ),
-          ],
-        );
-      });
 }
 
 class SignUp extends StatefulWidget {
@@ -289,7 +265,7 @@ class _SignUp extends State<SignUp> {
                 customTextField("Email", EdgeInsets.all(10), false,
                     emailController, emailFocus),
                 customTextField("Full Name", EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    false, passController, nameFocus),
+                    false, nameController, nameFocus),
                 customTextField("State", EdgeInsets.fromLTRB(10, 40, 10, 0),
                     false, stateController, stateFocus),
                 customTextField("District", EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -320,23 +296,9 @@ class _SignUp extends State<SignUp> {
                             "Enter Email properly",
                             emailController,
                             emailFocus);
-                      } else if (passController.text == '') {
-                        showDialogBox(
-                            context,
-                            "Invalid Input!",
-                            "Enter Password properly",
-                            passController,
-                            passFocus);
                       } else if (nameController.text == '') {
                         showDialogBox(context, "Invalid Input!",
                             "Enter Name properly", nameController, nameFocus);
-                      } else if (confPassController.text == '') {
-                        showDialogBox(
-                            context,
-                            "Invalid Input!",
-                            "Enter Confirm Password properly",
-                            confPassController,
-                            confPassFocus);
                       } else if (stateController.text == '') {
                         showDialogBox(
                             context,
@@ -358,14 +320,35 @@ class _SignUp extends State<SignUp> {
                             "Enter Farmer or Scientist",
                             typeController,
                             typeFocus);
+                      } else if (passController.text == '') {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Enter Password properly",
+                            passController,
+                            passFocus);
+                      } else if (confPassController.text == '') {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Enter Confirm Password properly",
+                            confPassController,
+                            confPassFocus);
                       } else {
                         print(emailController.text);
-                        print(passController.text);
                         print(nameController.text);
-                        print(confPassController.text);
                         print(stateController.text);
                         print(distController.text);
                         print(typeController.text);
+                        print(passController.text);
+                        print(confPassController.text);
+                        emailController.clear();
+                        nameController.clear();
+                        stateController.clear();
+                        distController.clear();
+                        typeController.clear();
+                        passController.clear();
+                        confPassController.clear();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => Dashboard()),
@@ -408,6 +391,33 @@ Widget customTextField(String hintText, EdgeInsets padd, bool obscureText,
       ),
     ),
   );
+}
+
+Future showDialogBox(
+    BuildContext context,
+    String errorTitle,
+    String errorMessage,
+    TextEditingController controller,
+    FocusNode textFocus) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(errorTitle),
+          content: new Text(errorMessage),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new TextButton(
+              child: new Text("Ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                controller.clear();
+                textFocus.requestFocus();
+              },
+            ),
+          ],
+        );
+      });
 }
 
 Widget roundedRectButton(

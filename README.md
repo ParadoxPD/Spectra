@@ -24,16 +24,16 @@ for analyzing and using light spectrum intensity for the better growth and susta
 
 <section>
 <p float="left" >
-  <img src="./Data/Screenshot_2021-06-05-22-44-15-53_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg" width = "300" />
-  <img src="./Data/Screenshot_2021-06-05-22-44-06-49_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg"  width = "300" /> 
-  <img src="./Data/Screenshot_2021-06-05-22-44-06-49_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg  " width = "300" />
+  <img src="./Data/Screenshot_2021-06-05-22-44-15-53_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg" width = 200" />
+  <img src="./Data/Screenshot_2021-06-05-22-44-06-49_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg"  width = "200" /> 
+  <img src="./Data/Screenshot_2021-06-05-22-44-06-49_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg  " width = "200" />
 </p>
 
 
 <p float="left">
-  <img src="./Data/Screenshot_2021-06-05-22-44-10-26_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg" width = "300" />
-  <img src="./Data/Screenshot_2021-06-05-22-44-15-53_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg" width = "300" /> 
-  <img src="./Data/Screenshot_2021-06-05-22-53-37-60.jpg" width = "300" />
+  <img src="./Data/Screenshot_2021-06-05-22-44-10-26_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg" width = "200" />
+  <img src="./Data/Screenshot_2021-06-05-22-44-15-53_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg" width = "200" /> 
+  <img src="./Data/Screenshot_2021-06-05-22-53-37-60.jpg" width = "200" />
 </p>
 </section>
 

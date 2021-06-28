@@ -31,10 +31,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Stack(
-          children: <Widget>[
-            Login(),
-          ],
+        body: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              Login(),
+            ],
+          ),
         ));
   }
 }

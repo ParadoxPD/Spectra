@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import '../bloc/blocs/user_bloc_provider.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -7,47 +8,15 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("hello"),
+          backgroundColor: Colors.white,
+          toolbarHeight: 100,
+          iconTheme: IconThemeData(color: Color(0xff32CE89)),
         ),
-        drawer: Drawer(
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text('Drawer Header'),
-              ),
-              ListTile(
-                title: Text('Item 1'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text('Item 2'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ), // Populate the Drawer in the next step.
-        ),
+        drawer: createSideDrawer(context),
         body: Container(
           color: Color(0xffE6E6E1),
           child: Column(
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(100),
-                child: Text("Top bar"),
-              ),
               Expanded(
                 child: Container(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -76,49 +45,85 @@ class Dashboard extends StatelessWidget {
   }
 }
 
-Widget getCard(context) {
-  return Card(
-    elevation: 0,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20.0),
-    ),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-        CustomListItem(
-          subtitle: 'Local Name',
-          thumbnail: Container(
-            child: CircleAvatar(
-              radius: 35,
-              foregroundImage: AssetImage('assets/Login_Back.png'),
-            ),
-          ),
-          title: 'Tomato',
-          isFavourite: false,
-        ),
-        Container(
-            padding: EdgeInsets.fromLTRB(60, 0, 20, 0),
-            child: Divider(
-              height: 50,
-              color: Color(0x55000000),
-            )),
-        ElevatedButton(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(55, 0, 55, 0),
-              child: Text(
-                'Details',
-                style: TextStyle(fontFamily: "SFProText"),
+Widget createSideDrawer(BuildContext context) {
+  return SafeArea(
+    child: ClipRRect(
+      borderRadius: BorderRadius.only(topRight: Radius.circular(85.0)),
+      child: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height * 0.32,
+              child: ClipRRect(
+                borderRadius:
+                    BorderRadius.only(bottomLeft: Radius.circular(85.0)),
+                child: DrawerHeader(
+                  margin: EdgeInsets.zero,
+                  padding: EdgeInsets.zero,
+                  child: Container(
+                    decoration: new BoxDecoration(
+                      color: Color(0xff241332),
+                      image: new DecorationImage(
+                        colorFilter: new ColorFilter.mode(
+                            Colors.black.withOpacity(0.36), BlendMode.dstATop),
+                        image: new AssetImage("assets/Login_Back.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(40, 50, 0, 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          CircleAvatar(
+                            radius: 35,
+                            child: Image.asset('assets/avatar.png'),
+                            backgroundColor: Color(0x00ffffff),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                            child: Text(
+                              "Isaac Newton",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 22),
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                              child: Text("@Newton69",
+                                  style: TextStyle(
+                                      color: Color(0xaaffffff), fontSize: 13)))
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
-            onPressed: () {/* ... */},
-            style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-            )))),
-        Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-      ],
+            ListTile(
+              title: Text('Item 1'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ), // Populate the Drawer in the next step.
+      ),
     ),
   );
 }
@@ -228,4 +233,51 @@ class TitleText extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget getCard(context) {
+  return Card(
+    elevation: 0,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20.0),
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+        CustomListItem(
+          subtitle: 'Local Name',
+          thumbnail: Container(
+            child: CircleAvatar(
+              radius: 35,
+              foregroundImage: AssetImage('assets/Login_Back.png'),
+            ),
+          ),
+          title: 'Tomato',
+          isFavourite: false,
+        ),
+        Container(
+            padding: EdgeInsets.fromLTRB(60, 0, 20, 0),
+            child: Divider(
+              height: 50,
+              color: Color(0x55000000),
+            )),
+        ElevatedButton(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(55, 0, 55, 0),
+              child: Text(
+                'Details',
+                style: TextStyle(fontFamily: "SFProText"),
+              ),
+            ),
+            onPressed: () {/* ... */},
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            )))),
+        Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+      ],
+    ),
+  );
 }

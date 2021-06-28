@@ -1,21 +1,23 @@
 class User {
-  String username;
-  String lastname;
-  String firstname;
   String email;
+  String name;
+  String state;
+  String district;
+  String type;
   String password;
   String apiKey;
   String id;
 
-  User(this.username, this.lastname, this.firstname, this.email, this.password,
-      this.apiKey, this.id);
+  User(this.email, this.name, this.state, this.district, this.type,
+      this.password, this.apiKey, this.id);
 
   User.fromJson(Map<String, dynamic> parsedJson)
-      : username = parsedJson['username'],
-        lastname = parsedJson['lastname'],
-        firstname = parsedJson['firstname'],
+      : name = parsedJson['name'],
+        state = parsedJson['state'],
+        district = parsedJson['district'],
         email = parsedJson['email'],
         password = parsedJson['password'],
         apiKey = parsedJson['api_key'],
-        id = parsedJson['id'];
+        id = parsedJson['id'],
+        type = parsedJson['type'];
 }

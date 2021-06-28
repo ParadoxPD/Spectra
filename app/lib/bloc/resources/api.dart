@@ -7,8 +7,8 @@ class Api {
   Client client = Client();
   // final _apiKey = 'your_api_key';
 
-  Future<User> registerUser(String username, String firstname, String lastname,
-      String password, String email) async {
+  Future<User> registerUser(String email, String name, String state,
+      String district, String type, String password) async {
     print("entered");
     Map<String, String> headers = {
       'Content-type': 'application/json',
@@ -16,10 +16,11 @@ class Api {
     };
     var body = json.encode({
       "email": email,
-      "username": username,
+      "name": name,
+      "state": state,
+      "district": district,
+      "type": type,
       "password": password,
-      "firstname": firstname,
-      "lastname": lastname
     });
 
     final response = await client.post("http://127.0.0.1:5000/api/register",
@@ -33,13 +34,13 @@ class Api {
     }
   }
 
-  Future signinUser(String username, String password) async {
+  Future signinUser(String email, String password) async {
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
     var body = json.encode({
-      "username": username,
+      "email": email,
       "password": password,
     });
 

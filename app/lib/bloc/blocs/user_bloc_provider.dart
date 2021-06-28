@@ -8,18 +8,18 @@ class UserBloc {
 
   Observable<User> get getUser => _userGetter.stream;
 
-  registerUser(String username, String firstname, String lastname,
-      String password, String email) async {
-    print(username);
+  registerUser(String email, String name, String state, String district,
+      String type, String password) async {
+    print(email);
     User itemModel = await _repository.registerUser(
-        username, firstname, lastname, password, email);
+        email, name, state, district, type, password);
     _userGetter.sink.add(itemModel);
     return itemModel;
   }
 
-  signinUser(String username, String password) async {
+  signinUser(String email, String password) async {
     // print(username);
-    User itemModel = await _repository.signinUser(username, password);
+    User itemModel = await _repository.signinUser(email, password);
     _userGetter.sink.add(itemModel);
     return itemModel;
   }

@@ -5,15 +5,15 @@ import '../../models/classes/user.dart';
 class Repository {
   final api = Api();
 
-  Future<User> registerUser(String username, String firstname, String lastname,
-      String password, String email) async {
+  Future<User> registerUser(String email, String name, String state,
+      String district, String type, String password) async {
     Future<User> data =
-        api.registerUser(username, firstname, lastname, password, email);
+        api.registerUser(email, name, state, district, type, password);
     return data;
   }
 
-  Future<User> signinUser(String username, String password) async {
-    Future<User> data = api.signinUser(username, password);
+  Future<User> signinUser(String email, String password) async {
+    Future<User> data = api.signinUser(email, password);
     return data;
   }
 }

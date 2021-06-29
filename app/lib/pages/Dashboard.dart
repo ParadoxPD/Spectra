@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../bloc/blocs/user_bloc_provider.dart';
 
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("hello"),
+          elevation: 0,
           backgroundColor: Colors.white,
           toolbarHeight: 100,
           iconTheme: IconThemeData(color: Color(0xff32CE89)),
@@ -17,6 +16,11 @@ class Dashboard extends StatelessWidget {
           color: Color(0xffE6E6E1),
           child: Column(
             children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color: Colors.white,
+                child: Text("hello"),
+              ),
               Expanded(
                 child: Container(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -50,78 +54,63 @@ Widget createSideDrawer(BuildContext context) {
     child: ClipRRect(
       borderRadius: BorderRadius.only(topRight: Radius.circular(85.0)),
       child: Drawer(
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height * 0.32,
-              child: ClipRRect(
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(85.0)),
-                child: DrawerHeader(
-                  margin: EdgeInsets.zero,
-                  padding: EdgeInsets.zero,
-                  child: Container(
-                    decoration: new BoxDecoration(
-                      color: Color(0xff241332),
-                      image: new DecorationImage(
-                        colorFilter: new ColorFilter.mode(
-                            Colors.black.withOpacity(0.36), BlendMode.dstATop),
-                        image: new AssetImage("assets/Login_Back.png"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(40, 50, 0, 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          CircleAvatar(
-                            radius: 35,
-                            child: Image.asset('assets/avatar.png'),
-                            backgroundColor: Color(0x00ffffff),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                            child: Text(
-                              "Isaac Newton",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 22),
-                            ),
-                          ),
-                          Padding(
-                              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                              child: Text("@Newton69",
-                                  style: TextStyle(
-                                      color: Color(0xaaffffff), fontSize: 13)))
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+        child: SizedBox.expand(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              sideMenuBanner(
+                  context,
+                  new AssetImage("assets/Login_Back.png"),
+                  Image.asset('assets/avatar.png'),
+                  "Isaac Newton",
+                  "@Newton69"),
+              Padding(padding: EdgeInsets.only(top: 30)),
+              sideMenuTile("Home", ImageIcon(AssetImage('assets/home.png')),
+                  TextStyle(fontSize: 16, fontWeight: FontWeight.w400), () {}),
+              Container(
+                  padding: EdgeInsets.fromLTRB(20, 5, 120, 5),
+                  child: ElevatedButton(
+                      child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                          child: Text(
+                            "Devices",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w400),
+                          )),
+                      onPressed: () {},
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color(0xff3AE379)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(80.0),
+                          ))))),
+              sideMenuTile(
+                  "Contact Us",
+                  ImageIcon(AssetImage('assets/user-minus.png')),
+                  TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                  () {}),
+              sideMenuTile("About Us", ImageIcon(AssetImage('assets/info.png')),
+                  TextStyle(fontSize: 16, fontWeight: FontWeight.w400), () {}),
+              Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height / 4.7)),
+              Padding(
+                padding: EdgeInsets.only(left: 20.0),
+                child: sideMenuTile(
+                    "Log Out",
+                    ImageIcon(AssetImage('assets/logout.png')),
+                    TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0x50000000)), () {
+                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                }),
               ),
-            ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
+            ],
+          ),
         ), // Populate the Drawer in the next step.
       ),
     ),
@@ -249,7 +238,7 @@ Widget getCard(context) {
           subtitle: 'Local Name',
           thumbnail: Container(
             child: CircleAvatar(
-              radius: 35,
+              radius: 30,
               foregroundImage: AssetImage('assets/Login_Back.png'),
             ),
           ),
@@ -272,12 +261,83 @@ Widget getCard(context) {
             ),
             onPressed: () {/* ... */},
             style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Color(0xff9222B9)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-            )))),
+                  borderRadius: BorderRadius.circular(18.0),
+                )))),
         Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
       ],
+    ),
+  );
+}
+
+Widget sideMenuBanner(BuildContext context, AssetImage banner, Image avatar,
+    String name, String username) {
+  return Container(
+    height: MediaQuery.of(context).size.height * 0.32,
+    child: ClipRRect(
+      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(85.0)),
+      child: DrawerHeader(
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
+        child: Container(
+          decoration: new BoxDecoration(
+            color: Color(0xff241332),
+            image: new DecorationImage(
+              colorFilter: new ColorFilter.mode(
+                  Colors.black.withOpacity(0.36), BlendMode.dstATop),
+              image: banner,
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(40, 50, 0, 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                CircleAvatar(
+                  radius: 35,
+                  child: avatar,
+                  backgroundColor: Color(0x00ffffff),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  child: Text(
+                    name,
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                ),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                    child: Text(username,
+                        style:
+                            TextStyle(color: Color(0xaaffffff), fontSize: 13)))
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget sideMenuTile(
+    String title, ImageIcon icon, TextStyle style, var handleTap) {
+  return InkWell(
+    onTap: handleTap,
+    child: Container(
+      child: ListTile(
+        leading: icon,
+        title: Transform.translate(
+            offset: Offset(-20, 0),
+            child: Text(
+              title,
+              style: style,
+            )),
+      ),
     ),
   );
 }

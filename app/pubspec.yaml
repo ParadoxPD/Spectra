@@ -54,6 +54,10 @@ flutter:
   assets:
     - assets/Login_Back.png
     - assets/avatar.png
+    - assets/home.png
+    - assets/logout.png
+    - assets/info.png
+    - assets/user-minus.png
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

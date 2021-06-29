@@ -30,13 +30,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Stack(
-            children: <Widget>[
-              Login(),
-            ],
-          ),
-        ));
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: <Widget>[
+          Login(),
+        ],
+      ),
+    );
   }
 }

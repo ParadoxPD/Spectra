@@ -7,23 +7,22 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.white,
-          toolbarHeight: 100,
+          title: titleBar(context, AssetImage('assets/avatar_profile.png'),
+              "Issac Newton", "Scientist"),
+          backgroundColor: Color(0xffffffff),
+          toolbarHeight: MediaQuery.of(context).size.height * 0.43,
           iconTheme: IconThemeData(color: Color(0xff32CE89)),
+          automaticallyImplyLeading: false,
         ),
         drawer: createSideDrawer(context),
         body: Container(
           color: Color(0xffE6E6E1),
           child: Column(
             children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                child: Text("hello"),
-              ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  height: MediaQuery.of(context).size.height / 4,
+                  padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
                   child: SizedBox.expand(
                     child: ListView.separated(
                       itemCount: 30,
@@ -40,6 +39,8 @@ class Dashboard extends StatelessWidget {
                 ),
               ),
               Container(
+                width: MediaQuery.of(context).size.width,
+                color: Colors.white,
                 padding: EdgeInsets.all(30),
                 child: Text("Top bar"),
               ),
@@ -47,6 +48,142 @@ class Dashboard extends StatelessWidget {
           ),
         ));
   }
+}
+
+Widget titleBar(
+    BuildContext context, AssetImage avatar, String title, String type) {
+  return SafeArea(
+    child: Container(
+      width: MediaQuery.of(context).size.width,
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          Transform.translate(
+            offset: Offset(-25, 20),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Transform.scale(
+                scale: 1.3,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  child: Builder(
+                    builder: (context) => IconButton(
+                      icon: new Icon(Icons.menu),
+                      onPressed: () => Scaffold.of(context).openDrawer(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Transform.translate(
+              offset: Offset(-6, 0),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 0),
+                    child: CircleAvatar(
+                      radius: 46,
+                      foregroundImage: avatar,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xee000000)),
+                    ),
+                  ),
+                  Text(
+                    type,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0x75000000)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30, bottom: 30),
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
+                            child: Text(
+                              "Follow",
+                              style: TextStyle(fontSize: 16),
+                            )),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Color(0xff9222B9)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                            )))),
+                  ),
+                ],
+              )),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        "5",
+                        style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xee000000)),
+                      ),
+                      Text("Plants",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0x75000000))),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        "5.0",
+                        style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xee000000)),
+                      ),
+                      Text("Rating",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0x75000000))),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        "12k",
+                        style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xee000000)),
+                      ),
+                      Text("Followers",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0x75000000))),
+                    ],
+                  ),
+                ]),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 Widget createSideDrawer(BuildContext context) {

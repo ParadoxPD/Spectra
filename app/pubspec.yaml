@@ -59,6 +59,14 @@ flutter:
     - assets/info.png
     - assets/user-minus.png
     - assets/avatar_profile.png
+    - assets/navHome.png
+    - assets/navChat.png
+    - assets/navDevices.png
+    - assets/navSettings.png
+    - assets/navHomeActive.png
+    - assets/navChatActive.png
+    - assets/navDevicesActive.png
+    - assets/navSettingsActive.png
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

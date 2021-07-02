@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
+  Dashboard({Key key}) : super(key: key);
+
+  @override
+  _Dashboard createState() => _Dashboard();
+}
+
+class _Dashboard extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          title: titleBar(context, AssetImage('assets/avatar_profile.png'),
-              "Issac Newton", "Scientist"),
-          backgroundColor: Color(0xffffffff),
-          toolbarHeight: MediaQuery.of(context).size.height * 0.43,
-          iconTheme: IconThemeData(color: Color(0xff32CE89)),
-          automaticallyImplyLeading: false,
-        ),
-        drawer: createSideDrawer(context),
+      drawer: createSideDrawer(context),
+      body: SafeArea(
+          child: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            sliverBar(context, "Issac Newton", "Scientist",
+                AssetImage('assets/avatar_profile.png')),
+          ];
+        },
         body: Container(
           color: Color(0xffE6E6E1),
           child: Column(
@@ -22,7 +28,7 @@ class Dashboard extends StatelessWidget {
               Expanded(
                 child: Container(
                   height: MediaQuery.of(context).size.height / 4,
-                  padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
+                  padding: EdgeInsets.only(top: 30),
                   child: SizedBox.expand(
                     child: ListView.separated(
                       itemCount: 30,
@@ -31,9 +37,7 @@ class Dashboard extends StatelessWidget {
                         height: 24,
                         color: Color(0xffE6E6E1),
                       ),
-                      itemBuilder: (context, index) {
-                        return getCard(context);
-                      },
+                      itemBuilder: randomizeCard,
                     ),
                   ),
                 ),
@@ -46,8 +50,90 @@ class Dashboard extends StatelessWidget {
               ),
             ],
           ),
-        ));
+        ),
+      )),
+    );
   }
+}
+
+Widget randomizeCard(BuildContext context, int index) {
+  return getCard(context);
+}
+
+Widget sliverBar(
+    BuildContext context, String title, String type, AssetImage avatar) {
+  return SliverAppBar(
+    leading: Transform.translate(
+      offset: Offset(4, 4),
+      child: Transform.scale(
+        scale: 1.3,
+        child: Builder(
+          builder: (context) => IconButton(
+            icon: new Icon(Icons.menu),
+            color: Color(0xff32CE89),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+      ),
+    ),
+    expandedHeight: MediaQuery.of(context).size.height * 0.43,
+    collapsedHeight: 60,
+    floating: true,
+    pinned: true,
+    snap: false,
+    elevation: 0,
+    backgroundColor: Colors.white,
+    flexibleSpace: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      var top = constraints.biggest.height;
+      return FlexibleSpaceBar(
+        title: Text(
+          title,
+          style: TextStyle(
+              color: top == 60 ? Color(0xbb000000) : Color(0x00000000)),
+        ),
+        centerTitle: true,
+        background: titleBar(context, avatar, title, type),
+      );
+    }),
+  );
+}
+
+List<Widget> mainBody(BuildContext context) {
+  return [
+    Container(
+      color: Color(0xffE6E6E1),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              height: MediaQuery.of(context).size.height / 4,
+              padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
+              child: SizedBox.expand(
+                child: ListView.separated(
+                  itemCount: 30,
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(
+                    height: 24,
+                    color: Color(0xffE6E6E1),
+                  ),
+                  itemBuilder: (context, index) {
+                    return getCard(context);
+                  },
+                ),
+              ),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            padding: EdgeInsets.all(30),
+            child: Text("Top bar"),
+          ),
+        ],
+      ),
+    )
+  ];
 }
 
 Widget titleBar(
@@ -59,25 +145,7 @@ Widget titleBar(
       child: Column(
         children: <Widget>[
           Transform.translate(
-            offset: Offset(-25, 20),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Transform.scale(
-                scale: 1.3,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Builder(
-                    builder: (context) => IconButton(
-                      icon: new Icon(Icons.menu),
-                      onPressed: () => Scaffold.of(context).openDrawer(),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Transform.translate(
-              offset: Offset(-6, 0),
+              offset: Offset(-6, 10),
               child: Column(
                 children: [
                   Padding(
@@ -106,7 +174,7 @@ Widget titleBar(
                         color: Color(0x75000000)),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 30, bottom: 30),
+                    padding: const EdgeInsets.only(top: 25, bottom: 25),
                     child: ElevatedButton(
                         onPressed: () {},
                         child: Padding(
@@ -125,60 +193,63 @@ Widget titleBar(
                   ),
                 ],
               )),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        "5",
-                        style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xee000000)),
-                      ),
-                      Text("Plants",
+          Transform.translate(
+            offset: Offset(0, 10),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          "5",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 22,
                               fontWeight: FontWeight.w400,
-                              color: Color(0x75000000))),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        "5.0",
-                        style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xee000000)),
-                      ),
-                      Text("Rating",
+                              color: Color(0xee000000)),
+                        ),
+                        Text("Plants",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0x75000000))),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          "5.0",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 22,
                               fontWeight: FontWeight.w400,
-                              color: Color(0x75000000))),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        "12k",
-                        style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xee000000)),
-                      ),
-                      Text("Followers",
+                              color: Color(0xee000000)),
+                        ),
+                        Text("Rating",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0x75000000))),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          "12k",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 22,
                               fontWeight: FontWeight.w400,
-                              color: Color(0x75000000))),
-                    ],
-                  ),
-                ]),
+                              color: Color(0xee000000)),
+                        ),
+                        Text("Followers",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0x75000000))),
+                      ],
+                    ),
+                  ]),
+            ),
           ),
         ],
       ),
@@ -363,6 +434,7 @@ class TitleText extends StatelessWidget {
 
 Widget getCard(context) {
   return Card(
+    margin: EdgeInsets.only(left: 25, right: 25),
     elevation: 0,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20.0),

@@ -1,5 +1,5 @@
-DROP DATABSE IF EXISTS reg_table;
-CREATE DATABSE reg_table;
+DROP DATABASE IF EXISTS reg_table;
+CREATE DATABASE reg_table;
 
 \c reg_table
 

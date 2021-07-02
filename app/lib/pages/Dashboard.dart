@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import './Dashboard.main.dart';
-import './Dashboard.settings.dart';
-import './Dashboard.devices.dart';
-import './Dashboard.chat.dart';
+import './Dashboard/Dashboard.main.dart';
+import './Dashboard/Dashboard.settings.dart';
+import './Dashboard/Dashboard.devices.dart';
+import './Dashboard/Dashboard.chat.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
@@ -44,43 +44,41 @@ class _Dashboard extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        drawer: createSideDrawer(context),
-        floatingActionButton: drawerIcon(context),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-        body: listScreens[tabIndex],
-        bottomNavigationBar: BottomNavigationBar(
-            elevation: 0,
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: Color(0xff9222B9),
-            unselectedItemColor: Color(0xffC8C7CC),
-            backgroundColor: Colors.white,
-            currentIndex: tabIndex,
-            onTap: (int index) {
-              setState(() {
-                tabIndex = index;
-              });
-            },
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                  icon: new Image.asset("assets/navHome.png"),
-                  label: '',
-                  activeIcon: new Image.asset("assets/navHomeActive.png")),
-              BottomNavigationBarItem(
-                  icon: new Image.asset("assets/navDevices.png"),
-                  label: '',
-                  activeIcon: new Image.asset("assets/navDevicesActive.png")),
-              BottomNavigationBarItem(
-                  icon: new Image.asset("assets/navChat.png"),
-                  label: '',
-                  activeIcon: new Image.asset("assets/navChatActive.png")),
-              BottomNavigationBarItem(
-                  icon: new Image.asset("assets/navSettings.png"),
-                  label: '',
-                  activeIcon: new Image.asset("assets/navSettingsActive.png")),
-            ]),
-      ),
+    return Scaffold(
+      drawer: createSideDrawer(context),
+      floatingActionButton: drawerIcon(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      body: listScreens[tabIndex],
+      bottomNavigationBar: BottomNavigationBar(
+          elevation: 0,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Color(0xff9222B9),
+          unselectedItemColor: Color(0xffC8C7CC),
+          backgroundColor: Colors.white,
+          currentIndex: tabIndex,
+          onTap: (int index) {
+            setState(() {
+              tabIndex = index;
+            });
+          },
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: new Image.asset("assets/navHome.png"),
+                label: '',
+                activeIcon: new Image.asset("assets/navHomeActive.png")),
+            BottomNavigationBarItem(
+                icon: new Image.asset("assets/navDevices.png"),
+                label: '',
+                activeIcon: new Image.asset("assets/navDevicesActive.png")),
+            BottomNavigationBarItem(
+                icon: new Image.asset("assets/navChat.png"),
+                label: '',
+                activeIcon: new Image.asset("assets/navChatActive.png")),
+            BottomNavigationBarItem(
+                icon: new Image.asset("assets/navSettings.png"),
+                label: '',
+                activeIcon: new Image.asset("assets/navSettingsActive.png")),
+          ]),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './Dashboard.dart';
 import '../bloc/blocs/user_bloc_provider.dart';
 
@@ -382,6 +383,8 @@ Widget customTextField(String hintText, EdgeInsets padd, bool obscureText,
       focusNode: focus,
       controller: controller,
       obscureText: obscureText,
+      keyboardType:
+          hintText == "Email" ? TextInputType.emailAddress : TextInputType.text,
       decoration: InputDecoration(
         fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(

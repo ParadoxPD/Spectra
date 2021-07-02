@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+List<CardData> data = [];
+int noOfCards = 20;
+
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
 
@@ -11,6 +14,7 @@ class Dashboard extends StatefulWidget {
 class _Dashboard extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
+    createRandomCardList();
     return Scaffold(
       drawer: createSideDrawer(context),
       body: SafeArea(
@@ -31,7 +35,7 @@ class _Dashboard extends State<Dashboard> {
                   padding: EdgeInsets.only(top: 30),
                   child: SizedBox.expand(
                     child: ListView.separated(
-                      itemCount: 30,
+                      itemCount: noOfCards,
                       separatorBuilder: (BuildContext context, int index) =>
                           const Divider(
                         height: 24,
@@ -56,8 +60,147 @@ class _Dashboard extends State<Dashboard> {
   }
 }
 
+class CardData {
+  String title;
+  String desc;
+  AssetImage avatar;
+  bool isFav;
+  int index;
+  CardData({this.avatar, this.desc, this.isFav, this.title, this.index});
+}
+
+void createRandomCardList() {
+  for (int i = 0; i < noOfCards; i++) {
+    data.add(CardData(
+        avatar: AssetImage('assets/Login_Back.png'),
+        title: "Tomato",
+        desc: "Something",
+        isFav: false,
+        index: i));
+  }
+}
+
 Widget randomizeCard(BuildContext context, int index) {
-  return getCard(context);
+  CardData card = data[index];
+  return CardItem(
+      avatar: card.avatar,
+      title: card.title,
+      desc: card.desc,
+      isFav: card.isFav,
+      index: index);
+}
+
+class CardItem extends StatefulWidget {
+  final String title;
+  final String desc;
+  final AssetImage avatar;
+  final bool isFav;
+  final int index;
+  CardItem(
+      {Key key, this.avatar, this.desc, this.isFav, this.title, this.index})
+      : super(key: key);
+
+  _CardItem createState() => _CardItem(
+      avatar: this.avatar,
+      desc: this.desc,
+      isFav: this.isFav,
+      title: this.title,
+      index: this.index);
+}
+
+class _CardItem extends State<CardItem> {
+  final String title;
+  final String desc;
+  final AssetImage avatar;
+  bool isFav;
+  final int index;
+  _CardItem({this.avatar, this.desc, this.isFav, this.title, this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.only(left: 25, right: 25),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+          CustomListItem(
+              subtitle: this.desc,
+              thumbnail: Container(
+                child: CircleAvatar(
+                  radius: 30,
+                  foregroundImage: this.avatar,
+                ),
+              ),
+              title: this.title,
+              isFavourite: this.isFav,
+              index: this.index),
+          Container(
+              padding: EdgeInsets.fromLTRB(60, 0, 20, 0),
+              child: Divider(
+                height: 50,
+                color: Color(0x55000000),
+              )),
+          ElevatedButton(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(55, 0, 55, 0),
+                child: Text(
+                  'Details',
+                  style: TextStyle(fontFamily: "SFProText"),
+                ),
+              ),
+              onPressed: () {/* ... */},
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Color(0xff9222B9)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  )))),
+          Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+        ],
+      ),
+    );
+  }
+}
+
+List<Widget> mainBody(BuildContext context) {
+  return [
+    Container(
+      color: Color(0xffE6E6E1),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              height: MediaQuery.of(context).size.height / 4,
+              padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
+              child: SizedBox.expand(
+                child: ListView.separated(
+                  itemCount: 30,
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(
+                    height: 24,
+                    color: Color(0xffE6E6E1),
+                  ),
+                  itemBuilder: randomizeCard,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            padding: EdgeInsets.all(30),
+            child: Text("Top bar"),
+          ),
+        ],
+      ),
+    )
+  ];
 }
 
 Widget sliverBar(
@@ -97,43 +240,6 @@ Widget sliverBar(
       );
     }),
   );
-}
-
-List<Widget> mainBody(BuildContext context) {
-  return [
-    Container(
-      color: Color(0xffE6E6E1),
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              height: MediaQuery.of(context).size.height / 4,
-              padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
-              child: SizedBox.expand(
-                child: ListView.separated(
-                  itemCount: 30,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(
-                    height: 24,
-                    color: Color(0xffE6E6E1),
-                  ),
-                  itemBuilder: (context, index) {
-                    return getCard(context);
-                  },
-                ),
-              ),
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            color: Colors.white,
-            padding: EdgeInsets.all(30),
-            child: Text("Top bar"),
-          ),
-        ],
-      ),
-    )
-  ];
 }
 
 Widget titleBar(
@@ -330,34 +436,39 @@ class CustomListItem extends StatefulWidget {
   final String title;
   final String subtitle;
   final bool isFavourite;
-  const CustomListItem({
-    Key key,
-    this.thumbnail,
-    this.title,
-    this.subtitle,
-    this.isFavourite,
-  }) : super(key: key);
+  final int index;
+
+  const CustomListItem(
+      {Key key,
+      this.thumbnail,
+      this.title,
+      this.subtitle,
+      this.isFavourite,
+      this.index})
+      : super(key: key);
 
   @override
   _CustomListItem createState() => _CustomListItem(
-        thumbnail: this.thumbnail,
-        title: this.title,
-        subtitle: this.subtitle,
-        isFavourite: this.isFavourite,
-      );
+      thumbnail: this.thumbnail,
+      title: this.title,
+      subtitle: this.subtitle,
+      isFavourite: this.isFavourite,
+      index: this.index);
 }
 
 class _CustomListItem extends State<CustomListItem> {
   final Widget thumbnail;
   final String title;
   final String subtitle;
-  bool isFavourite = false;
-  _CustomListItem({
-    this.thumbnail,
-    this.title,
-    this.subtitle,
-    this.isFavourite,
-  });
+  bool isFavourite;
+  final int index;
+
+  _CustomListItem(
+      {this.thumbnail,
+      this.title,
+      this.subtitle,
+      this.isFavourite,
+      this.index});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -384,7 +495,8 @@ class _CustomListItem extends State<CustomListItem> {
               setState(() {
                 isFavourite = !isFavourite;
               });
-              print(isFavourite);
+              data[this.index].isFav = this.isFavourite;
+              print(this.isFavourite);
             },
           ),
         ],
@@ -430,56 +542,6 @@ class TitleText extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget getCard(context) {
-  return Card(
-    margin: EdgeInsets.only(left: 25, right: 25),
-    elevation: 0,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20.0),
-    ),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-        CustomListItem(
-          subtitle: 'Local Name',
-          thumbnail: Container(
-            child: CircleAvatar(
-              radius: 30,
-              foregroundImage: AssetImage('assets/Login_Back.png'),
-            ),
-          ),
-          title: 'Tomato',
-          isFavourite: false,
-        ),
-        Container(
-            padding: EdgeInsets.fromLTRB(60, 0, 20, 0),
-            child: Divider(
-              height: 50,
-              color: Color(0x55000000),
-            )),
-        ElevatedButton(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(55, 0, 55, 0),
-              child: Text(
-                'Details',
-                style: TextStyle(fontFamily: "SFProText"),
-              ),
-            ),
-            onPressed: () {/* ... */},
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Color(0xff9222B9)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                )))),
-        Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-      ],
-    ),
-  );
 }
 
 Widget sideMenuBanner(BuildContext context, AssetImage banner, Image avatar,

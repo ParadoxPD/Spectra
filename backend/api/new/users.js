@@ -150,32 +150,40 @@ router.post('/register', (req, res) => {
 // });
 
 router.post('/login', (req, res) => {
-	// Ensures that all entries by the user are valid
-	const { errors, isValid } = validateLoginInput(req.body);
+	const token = req.headers.token;
+	console.log(token);
+	if (token)
+		database('users').returning([ 'id', 'email', 'fullname' ]).where({ token: token }).then((user) => {
+			console.log(user[0]);
 
-	if (!isValid) {
-		return res.status(400).json(errors);
-	} else {
-		database
-			.select('id', 'email', 'password')
-			.where('email', '=', req.body.email)
-			.from('users')
-			.then((data) => {
-				bcrypt.compare(req.body.password, data[0].password).then((isMatch) => {
-					if (isMatch) {
-						const payload = { id: data[0].id, email: data[0].email };
-						jwt.sign(payload, key.secretOrKey, { expiresIn: 3600 }, (err, token) => {
-							res.status(200).json('Bearer ' + token);
-						});
-					} else {
-						res.status(400).json('Bad request');
-					}
-				});
-			})
-			.catch((err) => {
-				res.status(400).json('Bad request');
-			});
-	}
+			res.status(200).json(user[0]);
+		});
+	// Ensures that all entries by the user are valid
+	// const { errors, isValid } = validateLoginInput(req.body);
+
+	// if (!isValid) {
+	// 	return res.status(400).json(errors);
+	// } else {
+	// 	database
+	// 		.select('id', 'email', 'password')
+	// 		.where('email', '=', req.body.email)
+	// 		.from('users')
+	// 		.then((data) => {
+	// 			bcrypt.compare(req.body.password, data[0].password).then((isMatch) => {
+	// 				if (isMatch) {
+	// 					const payload = { id: data[0].id, email: data[0].email };
+	// 					jwt.sign(payload, key.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+	// 						res.status(200).json('Bearer ' + token);
+	// 					});
+	// 				} else {
+	// 					res.status(400).json('Bad request');
+	// 				}
+	// 			});
+	// 		})
+	// 		.catch((err) => {
+	// 			res.status(400).json('Bad request');
+	// 		});
+	// }
 });
 
 // Exports the router object

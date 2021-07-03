@@ -103,6 +103,7 @@ class EmailRoute extends StatelessWidget {
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
+          leading: new Container(),
           backgroundColor: Colors.white,
           elevation: 0,
           bottom: PreferredSize(

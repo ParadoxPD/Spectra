@@ -1,8 +1,10 @@
+import 'package:app/models/classes/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 List<CardData> data = [];
 int noOfCards = 20;
+User user;
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -31,15 +33,9 @@ class _MainPage extends State<MainPage> {
               Expanded(
                 child: Container(
                   height: MediaQuery.of(context).size.height / 4,
-                  padding: EdgeInsets.only(top: 30),
                   child: SizedBox.expand(
-                    child: ListView.separated(
+                    child: ListView.builder(
                       itemCount: noOfCards,
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(
-                        height: 24,
-                        color: Color(0xffE6E6E1),
-                      ),
                       itemBuilder: randomizeCard,
                     ),
                   ),
@@ -112,7 +108,7 @@ class _CardItem extends State<CardItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.only(left: 25, right: 25),
+      margin: EdgeInsets.only(left: 25, right: 25, top: 30),
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
@@ -199,6 +195,7 @@ List<Widget> mainBody(BuildContext context) {
 Widget sliverBar(
     BuildContext context, String title, String type, AssetImage avatar) {
   return SliverAppBar(
+    leading: Container(),
     expandedHeight: MediaQuery.of(context).size.height * 0.43,
     collapsedHeight: 60,
     floating: true,

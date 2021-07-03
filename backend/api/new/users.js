@@ -21,6 +21,7 @@ const checkResendField = require('../../validation/resend');
 
 //Register route
 router.post('/register', (req, res) => {
+	console.log(req.body);
 	const { errors, isValid } = checkRegistrationFields(req.body);
 
 	if (!isValid) {

@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS simple_api;
-CREATE DATABASE simple_api;
+DROP DATABASE IF EXISTS user_table;
+CREATE DATABASE user_table;
 
-\c simple_api;
+\c user_table;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 

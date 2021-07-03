@@ -10,7 +10,7 @@ const tokenExpiry = require('./utilities/tokenExpiry');
 const userRoutes = require('./api/new/users');
 const { Server } = require('http');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use('/v1/users', userRoutes);
 

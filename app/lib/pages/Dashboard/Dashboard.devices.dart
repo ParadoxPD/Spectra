@@ -11,6 +11,13 @@ class DevicesPage extends StatefulWidget {
 class _DevicesPage extends State<DevicesPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Container(
+        child: Text(
+          "Feature Yet to be added",
+          style: TextStyle(fontSize: 26),
+        ),
+      ),
+    );
   }
 }

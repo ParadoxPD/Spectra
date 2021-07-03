@@ -12,7 +12,9 @@ CREATE TABLE users (
   registered BIGINT,
   token VARCHAR(128) UNIQUE,
   createdtime BIGINT,
-  emailVerified BOOLEAN,
-  tokenusedbefore BOOLEAN,
-  PRIMARY KEY (email)
+  fullname VARCHAR(128) NOT NULL,
+  usertype VARCHAR(128) NOT NULL,
+
+
+  PRIMARY KEY (token)
 );

@@ -243,18 +243,18 @@ class _SignUp extends State<SignUp> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
   final confPassController = TextEditingController();
-  final stateController = TextEditingController();
+  //final stateController = TextEditingController();
   final nameController = TextEditingController();
   final typeController = TextEditingController();
-  final distController = TextEditingController();
+  // final distController = TextEditingController();
 
   final emailFocus = FocusNode();
   final passFocus = FocusNode();
   final confPassFocus = FocusNode();
-  final stateFocus = FocusNode();
+  // final stateFocus = FocusNode();
   final nameFocus = FocusNode();
   final typeFocus = FocusNode();
-  final distFocus = FocusNode();
+  // final distFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -268,10 +268,10 @@ class _SignUp extends State<SignUp> {
                     emailController, emailFocus),
                 customTextField("Full Name", EdgeInsets.fromLTRB(10, 10, 10, 0),
                     false, nameController, nameFocus),
-                customTextField("State", EdgeInsets.fromLTRB(10, 40, 10, 0),
-                    false, stateController, stateFocus),
-                customTextField("District", EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    false, distController, distFocus),
+                // customTextField("State", EdgeInsets.fromLTRB(10, 40, 10, 0),
+                //     false, stateController, stateFocus),
+                // customTextField("District", EdgeInsets.fromLTRB(10, 0, 10, 0),
+                //     false, distController, distFocus),
                 customTextField(
                     "Farmer/Scientist",
                     EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -301,20 +301,6 @@ class _SignUp extends State<SignUp> {
                       } else if (nameController.text == '') {
                         showDialogBox(context, "Invalid Input!",
                             "Enter Name properly", nameController, nameFocus);
-                      } else if (stateController.text == '') {
-                        showDialogBox(
-                            context,
-                            "Invalid Input!",
-                            "Enter State properly",
-                            stateController,
-                            stateFocus);
-                      } else if (distController.text == '') {
-                        showDialogBox(
-                            context,
-                            "Invalid Input!",
-                            "Enter District properly",
-                            distController,
-                            distFocus);
                       } else if (typeController.text == '') {
                         showDialogBox(
                             context,
@@ -339,15 +325,15 @@ class _SignUp extends State<SignUp> {
                       } else {
                         print(emailController.text);
                         print(nameController.text);
-                        print(stateController.text);
-                        print(distController.text);
+                        // print(stateController.text);
+                        // print(distController.text);
                         print(typeController.text);
                         print(passController.text);
                         print(confPassController.text);
                         emailController.clear();
                         nameController.clear();
-                        stateController.clear();
-                        distController.clear();
+                        // stateController.clear();
+                        // distController.clear();
                         typeController.clear();
                         passController.clear();
                         confPassController.clear();

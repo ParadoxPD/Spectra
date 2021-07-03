@@ -36,18 +36,18 @@ router.post('/register', (req, res) => {
 
 	bcrypt.genSalt(12, (err, salt) => {
 		if (err) throw err;
-		bcrypt.hash(req.body.password1, salt, (err, hash) => {
-			if (err) throw err;
+		bcrypt.hash(req.body.password1, salt, (error, hash) => {
+			if (error) throw err;
 			database('users')
-				.returning([ 'id', 'email', 'registered', 'token' ])
+				.returning([ 'id', 'email', 'token', 'fullname' ])
 				.insert({
 					email: req.body.email,
 					password: hash,
 					registered: Date.now(),
 					token: token,
 					createdtime: Date.now(),
-					emailverified: 'f',
-					tokenusedbefore: 'f'
+					usertype: req.body.type,
+					fullname: req.body.fullname
 				})
 				.then((user) => {
 					res.json(user[0]);
@@ -60,102 +60,94 @@ router.post('/register', (req, res) => {
 	});
 });
 
-router.post('/verify/:token', (req, res) => {
-	const { token } = req.params;
-	const errors = {};
+// router.post('/verify/:token', (req, res) => {
+// 	const { token } = req.params;
+// 	const errors = {};
 
-	database
-		.returning([ 'email', 'emailverified', 'tokenusedbefore' ])
-		.from('users')
-		.where({ token: token, tokenusedbefore: 'f' })
-		.update({ emailverified: 't', tokenusedbefore: 't' })
-		.then((data) => {
-			if (data.length > 0) {
-				res.json('Email verified! Please login to access your account');
-			} else {
-				database
-					.select('email', 'emailverified', 'tokenusedbefore')
-					.from('users')
-					.where('token', token)
-					.then((check) => {
-						if (check.length > 0) {
-							if (check[0].emailverified) {
-								errors.alreadyVerified = 'Email already verified. Please login to your account.';
-								res.status(400).json(errors);
-							}
-						} else {
-							errors.email_invalid =
-								'Email invalid. Please check if you have registered with the correct email address or re-send the verification link to your email ';
-							res.status(400).json(errors);
-						}
-					})
-					.catch((err) => {
-						errors.db = 'Bad request';
-						res.status(400).json(errors);
-					});
-			}
-		})
-		.catch((err) => {
-			errors.db = 'Bad request';
-			res.status(400).json(errors);
-		});
-});
-router.post('/resend_email', (req, res) => {
-	const { errors, isValid } = checkResendField(req.body);
+// 	database
+// 		.returning([ 'email', 'emailverified', 'tokenusedbefore' ])
+// 		.from('users')
+// 		.where({ token: token, tokenusedbefore: 'f' })
+// 		.update({ emailverified: 't', tokenusedbefore: 't' })
+// 		.then((data) => {
+// 			if (data.length > 0) {
+// 				res.json('Email verified! Please login to access your account');
+// 			} else {
+// 				database
+// 					.select('email', 'emailverified', 'tokenusedbefore')
+// 					.from('users')
+// 					.where('token', token)
+// 					.then((check) => {
+// 						if (check.length > 0) {
+// 							if (check[0].emailverified) {
+// 								errors.alreadyVerified = 'Email already verified. Please login to your account.';
+// 								res.status(400).json(errors);
+// 							}
+// 						} else {
+// 							errors.email_invalid =
+// 								'Email invalid. Please check if you have registered with the correct email address or re-send the verification link to your email ';
+// 							res.status(400).json(errors);
+// 						}
+// 					})
+// 					.catch((err) => {
+// 						errors.db = 'Bad request';
+// 						res.status(400).json(errors);
+// 					});
+// 			}
+// 		})
+// 		.catch((err) => {
+// 			errors.db = 'Bad request';
+// 			res.status(400).json(errors);
+// 		});
+// });
+// router.post('/resend_email', (req, res) => {
+// 	const { errors, isValid } = checkResendField(req.body);
 
-	if (!isValid) {
-		return res.status(400).json(errors);
-	}
+// 	if (!isValid) {
+// 		return res.status(400).json(errors);
+// 	}
 
-	let resendToken;
-	crypto.randomBytes(48, (err, buf) => {
-		if (err) throw err;
-		resendToken = buf.toString('base64').replace(/\//g, '').replace(/\+/g, '-');
-		return resendToken;
-	});
-	database
-		.table('users')
-		.select('*')
-		.where({ email: req.body.email })
-		.then((data) => {
-			if (data.length == 0) {
-				errors.invalid = 'Invalid email address. Please register again!';
-				res.status(400).json(errors);
-			} else {
-				database
-					.table('users')
-					.returning([ 'email', 'token' ])
-					.where({ email: data[0].email, emailverified: 'false' })
-					.update({ token: resendToken, createdtime: Date.now() })
-					.then((result) => {
-						if (result.length) {
-							let to = [ result[0].email ];
+// 	let resendToken;
+// 	crypto.randomBytes(48, (err, buf) => {
+// 		if (err) throw err;
+// 		resendToken = buf.toString('base64').replace(/\//g, '').replace(/\+/g, '-');
+// 		return resendToken;
+// 	});
+// 	database
+// 		.table('users')
+// 		.select('*')
+// 		.where({ email: req.body.email })
+// 		.then((data) => {
+// 			if (data.length == 0) {
+// 				errors.invalid = 'Invalid email address. Please register again!';
+// 				res.status(400).json(errors);
+// 			} else {
+// 				database
+// 					.table('users')
+// 					.returning([ 'email', 'token' ])
+// 					.where({ email: data[0].email, emailverified: 'false' })
+// 					.update({ token: resendToken, createdtime: Date.now() })
+// 					.then((result) => {
+// 						if (result.length) {
+// 							let to = [ result[0].email ];
 
-							let link = 'https://yourWebsite/v1/users/verify/' + result[0].token;
-
-							let sub = 'Confirm Registration';
-
-							let content =
-								'<body><p>Please verify your email.</p> <a href=' + link + '>Verify email</a></body>';
-							//sendEmail.Email(to, sub, content);
-
-							res.json('Email re-sent!');
-						} else {
-							errors.alreadyVerified = 'Email address has already been verified, please login.';
-							res.status(400).json(errors);
-						}
-					})
-					.catch((err) => {
-						errors.db = 'Bad request';
-						res.status(400).json(errors);
-					});
-			}
-		})
-		.catch((err) => {
-			errors.db = 'Bad request';
-			res.status(400).json(errors);
-		});
-});
+// 							res.json('Email re-sent!');
+// 						} else {
+// 							errors.alreadyVerified = 'Email address has already been verified, please login.';
+// 							res.status(400).json(errors);
+// 						}
+// 					})
+// 					.catch((err) => {
+// 						errors.db = 'Bad request';
+// 						res.status(400).json(errors);
+// 					});
+// 			}
+// 		})
+// 		.catch((err) => {
+// 			errors.db = 'Bad request';
+// 			res.status(400).json(errors);
+// 		});
+// });
 
 router.post('/login', (req, res) => {
 	// Ensures that all entries by the user are valid
@@ -167,7 +159,6 @@ router.post('/login', (req, res) => {
 		database
 			.select('id', 'email', 'password')
 			.where('email', '=', req.body.email)
-			.andWhere('emailverified', true)
 			.from('users')
 			.then((data) => {
 				bcrypt.compare(req.body.password, data[0].password).then((isMatch) => {

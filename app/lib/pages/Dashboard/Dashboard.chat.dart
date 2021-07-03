@@ -11,6 +11,13 @@ class ChatPage extends StatefulWidget {
 class _ChatPage extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Container(
+        child: Text(
+          "Feature Yet to be added",
+          style: TextStyle(fontSize: 26),
+        ),
+      ),
+    );
   }
 }

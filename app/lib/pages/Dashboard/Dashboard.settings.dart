@@ -11,6 +11,13 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPage extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Container(
+        child: Text(
+          "Feature Yet to be added",
+          style: TextStyle(fontSize: 26),
+        ),
+      ),
+    );
   }
 }

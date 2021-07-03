@@ -1,25 +1,13 @@
-// simeplcode-api/api/routes/users.js
-// Include express
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
 const database = require('../../database');
-const sendEmail = require('../../utilities/sendEmail');
-// Validation
+
 const checkRegistrationFields = require('../../validation/register');
-const key = require('../../utilities/keys');
-// Login validation
+
 const validateLoginInput = require('../../validation/login');
-// Login validation
 
-// Resend email validaiton
-const checkResendField = require('../../validation/resend');
-
-//validation
-
-//Register route
 router.post('/register', (req, res) => {
 	console.log(req.body);
 	const { errors, isValid } = checkRegistrationFields(req.body);
@@ -60,131 +48,54 @@ router.post('/register', (req, res) => {
 	});
 });
 
-// router.post('/verify/:token', (req, res) => {
-// 	const { token } = req.params;
-// 	const errors = {};
-
-// 	database
-// 		.returning([ 'email', 'emailverified', 'tokenusedbefore' ])
-// 		.from('users')
-// 		.where({ token: token, tokenusedbefore: 'f' })
-// 		.update({ emailverified: 't', tokenusedbefore: 't' })
-// 		.then((data) => {
-// 			if (data.length > 0) {
-// 				res.json('Email verified! Please login to access your account');
-// 			} else {
-// 				database
-// 					.select('email', 'emailverified', 'tokenusedbefore')
-// 					.from('users')
-// 					.where('token', token)
-// 					.then((check) => {
-// 						if (check.length > 0) {
-// 							if (check[0].emailverified) {
-// 								errors.alreadyVerified = 'Email already verified. Please login to your account.';
-// 								res.status(400).json(errors);
-// 							}
-// 						} else {
-// 							errors.email_invalid =
-// 								'Email invalid. Please check if you have registered with the correct email address or re-send the verification link to your email ';
-// 							res.status(400).json(errors);
-// 						}
-// 					})
-// 					.catch((err) => {
-// 						errors.db = 'Bad request';
-// 						res.status(400).json(errors);
-// 					});
-// 			}
-// 		})
-// 		.catch((err) => {
-// 			errors.db = 'Bad request';
-// 			res.status(400).json(errors);
-// 		});
-// });
-// router.post('/resend_email', (req, res) => {
-// 	const { errors, isValid } = checkResendField(req.body);
-
-// 	if (!isValid) {
-// 		return res.status(400).json(errors);
-// 	}
-
-// 	let resendToken;
-// 	crypto.randomBytes(48, (err, buf) => {
-// 		if (err) throw err;
-// 		resendToken = buf.toString('base64').replace(/\//g, '').replace(/\+/g, '-');
-// 		return resendToken;
-// 	});
-// 	database
-// 		.table('users')
-// 		.select('*')
-// 		.where({ email: req.body.email })
-// 		.then((data) => {
-// 			if (data.length == 0) {
-// 				errors.invalid = 'Invalid email address. Please register again!';
-// 				res.status(400).json(errors);
-// 			} else {
-// 				database
-// 					.table('users')
-// 					.returning([ 'email', 'token' ])
-// 					.where({ email: data[0].email, emailverified: 'false' })
-// 					.update({ token: resendToken, createdtime: Date.now() })
-// 					.then((result) => {
-// 						if (result.length) {
-// 							let to = [ result[0].email ];
-
-// 							res.json('Email re-sent!');
-// 						} else {
-// 							errors.alreadyVerified = 'Email address has already been verified, please login.';
-// 							res.status(400).json(errors);
-// 						}
-// 					})
-// 					.catch((err) => {
-// 						errors.db = 'Bad request';
-// 						res.status(400).json(errors);
-// 					});
-// 			}
-// 		})
-// 		.catch((err) => {
-// 			errors.db = 'Bad request';
-// 			res.status(400).json(errors);
-// 		});
-// });
-
 router.post('/login', (req, res) => {
 	const token = req.headers.token;
-	console.log(token);
-	if (token)
-		database('users').returning([ 'id', 'email', 'fullname' ]).where({ token: token }).then((user) => {
-			console.log(user[0]);
 
-			res.status(200).json(user[0]);
-		});
-	// Ensures that all entries by the user are valid
-	// const { errors, isValid } = validateLoginInput(req.body);
+	if (token) {
+		database('users')
+			.select('id', 'email', 'fullname', 'token')
+			.where({ token: token })
+			.then((user) => {
+				user = user[0];
+				let resData;
+				resData = { id: user['id'], email: user['email'], fullname: user['fullname'] };
 
-	// if (!isValid) {
-	// 	return res.status(400).json(errors);
-	// } else {
-	// 	database
-	// 		.select('id', 'email', 'password')
-	// 		.where('email', '=', req.body.email)
-	// 		.from('users')
-	// 		.then((data) => {
-	// 			bcrypt.compare(req.body.password, data[0].password).then((isMatch) => {
-	// 				if (isMatch) {
-	// 					const payload = { id: data[0].id, email: data[0].email };
-	// 					jwt.sign(payload, key.secretOrKey, { expiresIn: 3600 }, (err, token) => {
-	// 						res.status(200).json('Bearer ' + token);
-	// 					});
-	// 				} else {
-	// 					res.status(400).json('Bad request');
-	// 				}
-	// 			});
-	// 		})
-	// 		.catch((err) => {
-	// 			res.status(400).json('Bad request');
-	// 		});
-	// }
+				res.status(200).json(resData);
+			})
+			.catch((err) => {
+				res.status(400).json('Bad request');
+			});
+	} else {
+		console.log(req.body);
+		const { errors, isValid } = validateLoginInput(req.body);
+
+		if (!isValid) {
+			return res.status(400).json(errors);
+		} else {
+			database
+				.select('id', 'email', 'password', 'token', 'fullname')
+				.where('email', '=', req.body.email)
+				.from('users')
+				.then((data) => {
+					bcrypt.compare(req.body.password, data[0].password).then((isMatch) => {
+						if (isMatch) {
+							const payload = {
+								id: data[0].id,
+								email: data[0].email,
+								fullname: data[0].fullname,
+								token: data[0].token
+							};
+							res.status(200).json(payload);
+						} else {
+							res.status(400).json('Bad request');
+						}
+					});
+				})
+				.catch((err) => {
+					res.status(400).json('Bad request');
+				});
+		}
+	}
 });
 
-// Exports the router object
 module.exports = router;

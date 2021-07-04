@@ -38,9 +38,24 @@ class _UserDataPage extends State<UserDataPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(child: Text("Full Name : " + user.name)),
-              Container(child: Text("Email : " + user.email)),
-              Container(child: Text("Type : " + user.type)),
+              Container(
+                  padding: EdgeInsets.only(top: 20, bottom: 20),
+                  child: Text(
+                    "Full Name : " + user.name,
+                    style: TextStyle(fontSize: 26),
+                  )),
+              Container(
+                  padding: EdgeInsets.only(top: 20, bottom: 20),
+                  child: Text(
+                    "Email : " + user.email,
+                    style: TextStyle(fontSize: 26),
+                  )),
+              Container(
+                  padding: EdgeInsets.only(top: 20, bottom: 20),
+                  child: Text(
+                    "Type : " + user.type,
+                    style: TextStyle(fontSize: 26),
+                  )),
             ],
           ),
         ),

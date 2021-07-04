@@ -1,5 +1,5 @@
 import 'package:app/models/classes/user.dart';
-import 'package:app/pages/Dashboard/details.dart';
+import 'package:app/pages/Dashboard/plantDetails.dart';
 import 'package:app/pages/Dashboard/userdata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -300,7 +300,7 @@ Widget titleBar(BuildContext context, AssetImage avatar, User user) {
                     Column(
                       children: <Widget>[
                         Text(
-                          "5",
+                          "20",
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w400,

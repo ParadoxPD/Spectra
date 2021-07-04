@@ -10,13 +10,16 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPage extends State<DetailsPage> {
   @override
-  double _value = 20;
+  double _rvalue = 20;
+  double _gvalue = 20;
+  double _bvalue = 20;
+  double _ivalue = 20;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 20,
         toolbarHeight: MediaQuery.of(context).size.height * 0.24,
-        foregroundColor: Colors.white,
+        // foregroundColor: Colors.white,
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(100)),
@@ -79,25 +82,98 @@ class _DetailsPage extends State<DetailsPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Slider(
-            //   min: 0,
-            //   max: 100,
-            //   value: _value,
-            //   onChanged: (value) {
-            //     setState(() {
-            //       _value = value;
-            //     });
-            //   },
-            // ),
-
-            Container(
-              child: Text(
-                "Feature yet to be added",
-                style: TextStyle(fontSize: 30),
-              ),
-            )
+            createSlider(
+              _rvalue,
+              "Red",
+              Color(0xffFA2A54),
+              (value) {
+                setState(() {
+                  _rvalue = value;
+                });
+              },
+            ),
+            createSlider(
+              _gvalue,
+              "Green",
+              Color(0xff58DD77),
+              (value) {
+                setState(() {
+                  _gvalue = value;
+                });
+              },
+            ),
+            createSlider(
+              _bvalue,
+              "Blue",
+              Color(0xff2665FA),
+              (value) {
+                setState(() {
+                  _bvalue = value;
+                });
+              },
+            ),
+            createSlider(
+              _ivalue,
+              "Infrared",
+              Color(0xff8A56AC),
+              (value) {
+                setState(() {
+                  _ivalue = value;
+                });
+              },
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget createSlider(double _value, String colorName, Color color, onChanged) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(50),
+          )),
+      child: Column(
+        children: [
+          SliderTheme(
+            data: SliderThemeData(
+                thumbColor: Color(0xffBCBCBC),
+                activeTrackColor: color,
+                inactiveTrackColor: Color(0xffEAE7F0)),
+            child: Slider(
+              min: 0,
+              max: 100,
+              value: _value,
+              onChanged: onChanged,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      height: 14,
+                      width: 14,
+                      decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                    ),
+                    Text(colorName),
+                  ],
+                ),
+                Text("Max")
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

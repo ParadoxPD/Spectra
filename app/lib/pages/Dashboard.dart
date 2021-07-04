@@ -1,3 +1,4 @@
+import 'package:app/models/classes/user.dart';
 import 'package:flutter/material.dart';
 
 import './Dashboard/Dashboard.main.dart';
@@ -6,10 +7,11 @@ import './Dashboard/Dashboard.devices.dart';
 import './Dashboard/Dashboard.chat.dart';
 
 class Dashboard extends StatefulWidget {
-  Dashboard({Key key}) : super(key: key);
+  final User user;
+  Dashboard({Key key, this.user}) : super(key: key);
 
   @override
-  _Dashboard createState() => _Dashboard();
+  _Dashboard createState() => _Dashboard(user: this.user);
 }
 
 Widget drawerIcon(BuildContext context) {
@@ -31,11 +33,14 @@ Widget drawerIcon(BuildContext context) {
 class _Dashboard extends State<Dashboard> {
   int tabIndex = 0;
   List<Widget> listScreens;
+  User user;
+
+  _Dashboard({this.user});
   @override
   void initState() {
     super.initState();
     listScreens = [
-      MainPage(),
+      MainPage(user: user),
       DevicesPage(),
       ChatPage(),
       SettingsPage(),
@@ -45,7 +50,7 @@ class _Dashboard extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: createSideDrawer(context),
+      drawer: createSideDrawer(context, this.user.name, this.user.email),
       floatingActionButton: drawerIcon(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       body: listScreens[tabIndex],
@@ -83,7 +88,7 @@ class _Dashboard extends State<Dashboard> {
   }
 }
 
-Widget createSideDrawer(BuildContext context) {
+Widget createSideDrawer(BuildContext context, String title, String sub) {
   return SafeArea(
     child: ClipRRect(
       borderRadius: BorderRadius.only(topRight: Radius.circular(85.0)),
@@ -93,12 +98,8 @@ Widget createSideDrawer(BuildContext context) {
             // Important: Remove any padding from the ListView.
             padding: EdgeInsets.zero,
             children: <Widget>[
-              sideMenuBanner(
-                  context,
-                  new AssetImage("assets/Login_Back.png"),
-                  Image.asset('assets/avatar.png'),
-                  "Isaac Newton",
-                  "@Newton69"),
+              sideMenuBanner(context, new AssetImage("assets/Login_Back.png"),
+                  Image.asset('assets/avatar.png'), title, sub),
               Padding(padding: EdgeInsets.only(top: 30)),
               sideMenuTile("Home", ImageIcon(AssetImage('assets/home.png')),
                   TextStyle(fontSize: 16, fontWeight: FontWeight.w400), () {}),

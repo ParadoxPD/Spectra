@@ -9,7 +9,6 @@ const checkRegistrationFields = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 
 router.post('/register', (req, res) => {
-	console.log(req.body);
 	const { errors, isValid } = checkRegistrationFields(req.body);
 
 	if (!isValid) {
@@ -38,9 +37,11 @@ router.post('/register', (req, res) => {
 					fullname: req.body.fullname
 				})
 				.then((user) => {
+					console.log(user[0]);
 					res.json(user[0]);
 				})
 				.catch((err) => {
+					console.log(err);
 					errors.account = 'Email already registered';
 					res.status(400).json(errors);
 				});
@@ -58,7 +59,7 @@ router.post('/login', (req, res) => {
 			.then((user) => {
 				user = user[0];
 				let resData;
-				resData = { id: user['id'], email: user['email'], fullname: user['fullname'] };
+				resData = { id: user['id'], email: user['email'], fullname: user['fullname'], type: user['usertype'] };
 
 				res.status(200).json(resData);
 			})
@@ -73,9 +74,9 @@ router.post('/login', (req, res) => {
 			return res.status(400).json(errors);
 		} else {
 			database
-				.select('id', 'email', 'password', 'token', 'fullname')
-				.where('email', '=', req.body.email)
 				.from('users')
+				.select('id', 'email', 'password', 'token', 'fullname', 'usertype')
+				.where('email', '=', req.body.email)
 				.then((data) => {
 					bcrypt.compare(req.body.password, data[0].password).then((isMatch) => {
 						if (isMatch) {
@@ -83,7 +84,8 @@ router.post('/login', (req, res) => {
 								id: data[0].id,
 								email: data[0].email,
 								fullname: data[0].fullname,
-								token: data[0].token
+								token: data[0].token,
+								type: data[0].usertype
 							};
 							res.status(200).json(payload);
 						} else {

@@ -12,12 +12,11 @@ class User {
       this.password, this.apiKey, this.id);
 
   User.fromJson(Map<String, dynamic> parsedJson)
-      : name = parsedJson['name'],
+      : name = parsedJson['fullname'],
         state = parsedJson['state'],
         district = parsedJson['district'],
         email = parsedJson['email'],
-        password = parsedJson['password'],
-        apiKey = parsedJson['api_key'],
+        apiKey = parsedJson['token'],
         id = parsedJson['id'],
         type = parsedJson['type'];
 }

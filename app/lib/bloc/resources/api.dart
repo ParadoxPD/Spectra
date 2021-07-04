@@ -9,32 +9,36 @@ class Api {
 
   Future<User> registerUser(String email, String name, String state,
       String district, String type, String password) async {
-    print("entered");
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
     var body = json.encode({
       "email": email,
-      "name": name,
+      "fullname": name,
       "state": state,
       "district": district,
       "type": type,
-      "password": password,
+      "password1": password,
+      "password2": password
     });
 
-    final response = await client.post("http://127.0.0.1:5000/api/register",
-        headers: headers, body: body);
+    final response = await client.post(
+        "http://localhost:5001/v1/users/register",
+        headers: headers,
+        body: body);
+    // print(response.body);
     if (response.statusCode == 200) {
-      final responseJson = json.decode(response.body)['data'];
+      final responseJson = json.decode(response.body);
+      // print(responseJson);
       User user = User.fromJson(responseJson);
       return user;
     } else {
-      throw Exception('Failed to load post');
+      print('Failed to load post');
     }
   }
 
-  Future signinUser(String email, String password) async {
+  Future<User> signinUser(String email, String password) async {
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -44,13 +48,13 @@ class Api {
       "password": password,
     });
 
-    final response = await client.post("http://127.0.0.1:5000/api/signin",
+    final response = await client.post("http://localhost:5001/v1/users/login",
         headers: headers, body: body);
     if (response.statusCode == 200) {
-      final responseJson = json.decode(response.body)['data'];
-      // User user = User.fromJson(responseJson);
-      // print(user.apiKey);
-      // return user;
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      User user = User.fromJson(responseJson);
+      return user;
     } else {
       throw Exception('Failed to load post');
     }

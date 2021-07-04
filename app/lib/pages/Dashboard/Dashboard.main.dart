@@ -1,19 +1,25 @@
 import 'package:app/models/classes/user.dart';
+import 'package:app/pages/Dashboard/details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 List<CardData> data = [];
 int noOfCards = 20;
-User user;
 
 class MainPage extends StatefulWidget {
-  MainPage({Key key}) : super(key: key);
+  final User user;
+
+  MainPage({Key key, this.user}) : super(key: key);
 
   @override
-  _MainPage createState() => _MainPage();
+  _MainPage createState() => _MainPage(user: this.user);
 }
 
 class _MainPage extends State<MainPage> {
+  User user;
+
+  _MainPage({this.user});
+
   @override
   Widget build(BuildContext context) {
     createRandomCardList();
@@ -22,7 +28,7 @@ class _MainPage extends State<MainPage> {
           child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            sliverBar(context, "Issac Newton", "Scientist",
+            sliverBar(context, this.user.name, this.user.type,
                 AssetImage('assets/avatar_profile.png')),
           ];
         },
@@ -142,7 +148,10 @@ class _CardItem extends State<CardItem> {
                   style: TextStyle(fontFamily: "SFProText"),
                 ),
               ),
-              onPressed: () {/* ... */},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DetailsPage()));
+              },
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Color(0xff9222B9)),

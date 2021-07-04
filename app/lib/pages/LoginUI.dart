@@ -1,3 +1,4 @@
+import 'package:app/models/classes/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -165,6 +166,8 @@ class _SignIn extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    // emailController.text = "paradox123@pd.com";
+    // passController.text = "12345678";
     return Container(
         color: Colors.white,
         child: Padding(
@@ -195,15 +198,12 @@ class _SignIn extends State<SignIn> {
                             passController,
                             passFocus);
                       } else {
-                        print(emailController.text);
-                        print(passController.text);
+                        // print(emailController.text);
+                        // print(passController.text);
 
-                        emailController.clear();
-                        passController.clear();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Dashboard()),
-                        );
+                        // emailController.clear();
+                        // passController.clear();
+                        signinUser(context);
                       }
                     },
                     style: ButtonStyle(
@@ -231,6 +231,18 @@ class _SignIn extends State<SignIn> {
                 )
               ],
             )));
+  }
+
+  Future signinUser(BuildContext context) async {
+    User user =
+        await bloc.signinUser(emailController.text, passController.text);
+    print(user);
+    if (user != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Dashboard(user: user)),
+      );
+    }
   }
 }
 
@@ -337,25 +349,30 @@ class _SignUp extends State<SignUp> {
                             "Enter Confirm Password properly",
                             confPassController,
                             confPassFocus);
+                      } else if (confPassController.text !=
+                          passController.text) {
+                        showDialogBox(
+                            context,
+                            "Invalid Input!",
+                            "Confirm Password doesnot match",
+                            confPassController,
+                            confPassFocus);
                       } else {
-                        print(emailController.text);
-                        print(nameController.text);
-                        print(stateController.text);
-                        print(distController.text);
-                        print(typeController.text);
-                        print(passController.text);
-                        print(confPassController.text);
-                        emailController.clear();
-                        nameController.clear();
-                        stateController.clear();
-                        distController.clear();
-                        typeController.clear();
-                        passController.clear();
-                        confPassController.clear();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Dashboard()),
-                        );
+                        // print(emailController.text);
+                        // print(nameController.text);
+                        // print(stateController.text);
+                        // print(distController.text);
+                        // print(typeController.text);
+                        // print(passController.text);
+                        // print(confPassController.text);
+                        // emailController.clear();
+                        // nameController.clear();
+                        // stateController.clear();
+                        // distController.clear();
+                        // typeController.clear();
+                        // passController.clear();
+                        // confPassController.clear();
+                        registerUser(context);
                       }
                     },
                     style: ButtonStyle(
@@ -373,6 +390,23 @@ class _SignUp extends State<SignUp> {
                 ),
               ],
             )));
+  }
+
+  Future registerUser(BuildContext context) async {
+    User user = await bloc.registerUser(
+        emailController.text,
+        nameController.text,
+        stateController.text,
+        distController.text,
+        typeController.text,
+        passController.text);
+    print(user);
+    if (user != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Dashboard(user: user)),
+      );
+    }
   }
 }
 

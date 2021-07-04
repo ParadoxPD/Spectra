@@ -166,8 +166,8 @@ class _SignIn extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    // emailController.text = "paradox123@pd.com";
-    // passController.text = "12345678";
+    emailController.text = "paradox123@pd.com";
+    passController.text = "12345678";
     return Container(
         color: Colors.white,
         child: Padding(

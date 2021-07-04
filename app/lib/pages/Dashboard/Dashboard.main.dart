@@ -1,5 +1,6 @@
 import 'package:app/models/classes/user.dart';
 import 'package:app/pages/Dashboard/details.dart';
+import 'package:app/pages/Dashboard/userdata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -28,8 +29,8 @@ class _MainPage extends State<MainPage> {
           child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            sliverBar(context, this.user.name, this.user.type,
-                AssetImage('assets/avatar_profile.png')),
+            sliverBar(
+                context, this.user, AssetImage('assets/avatar_profile.png')),
           ];
         },
         body: Container(
@@ -201,8 +202,7 @@ List<Widget> mainBody(BuildContext context) {
   ];
 }
 
-Widget sliverBar(
-    BuildContext context, String title, String type, AssetImage avatar) {
+Widget sliverBar(BuildContext context, User user, AssetImage avatar) {
   return SliverAppBar(
     leading: Container(),
     expandedHeight: MediaQuery.of(context).size.height * 0.43,
@@ -217,19 +217,18 @@ Widget sliverBar(
       var top = constraints.biggest.height;
       return FlexibleSpaceBar(
         title: Text(
-          title,
+          user.name,
           style: TextStyle(
               color: top == 60 ? Color(0xbb000000) : Color(0x00000000)),
         ),
         centerTitle: true,
-        background: titleBar(context, avatar, title, type),
+        background: titleBar(context, avatar, user),
       );
     }),
   );
 }
 
-Widget titleBar(
-    BuildContext context, AssetImage avatar, String title, String type) {
+Widget titleBar(BuildContext context, AssetImage avatar, User user) {
   return SafeArea(
     child: Container(
       width: MediaQuery.of(context).size.width,
@@ -251,7 +250,7 @@ Widget titleBar(
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      title,
+                      user.name,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w400,
@@ -259,7 +258,7 @@ Widget titleBar(
                     ),
                   ),
                   Text(
-                    type,
+                    user.type,
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -268,11 +267,17 @@ Widget titleBar(
                   Padding(
                     padding: const EdgeInsets.only(top: 25, bottom: 25),
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserDataPage(user: user)),
+                          );
+                        },
                         child: Padding(
                             padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
                             child: Text(
-                              "Follow",
+                              "Data",
                               style: TextStyle(fontSize: 16),
                             )),
                         style: ButtonStyle(
